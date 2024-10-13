@@ -1,213 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4843007524416588"
-     crossorigin="anonymous"></script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Services Offered</title>
-    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="/static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body>
-    <div style="display: none">
-      <svg id="check">
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-      </svg>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESORT NAME TITLE HERE</title>
+
+  <!--  -->
+
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-MH2W7TQEH3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-MH2W7TQEH3');</script>   -->
+<!-- End Google Tag -->
+
+
+<!-- SCRIPT FOR API  -->
+<script defer>
+addEventListener("DOMContentLoaded", (event) => {
+
+
+  let req = new XMLHttpRequest();
+  // https://jsonbin.io/app/bins
+  // to Use change the last  https://api.jsonbin.io/v3/b/<BIN_ID>
+    req.open("GET", "https://api.jsonbin.io/v3/b/6707f0d0e41b4d34e4406955", true);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.setRequestHeader("X-Access-Key", "$2a$10$0DnmOTXD4FH6pg/Ww0EcvOgU5TufJYVYizT0G0B1wLaocr99G8iUS");
+    req.send();
+    req.onreadystatechange = () => {
+    if (req.readyState == XMLHttpRequest.DONE) {
+      resortData = JSON.parse(req.response).record[0]
+      // /resorts/static/resorts/scriptsfolder/updateresortdata.js
+      UpdateResortData(resortData)
+      }
+    };
+
+
+
+});
+
+
+
+
+
+</script>
+
+
+
+<!-- StylesHeet -->
+<link rel="stylesheet" href="/resorts/static/resorts/layout.css">
+<link rel="stylesheet" href="/resorts/static/resorts/bootstrap/css/master.css" />
+<script src="/resorts/static/resorts/bootstrap/js/bootstrap.js"></script>
+<script src="/resorts/static/resorts/scriptsfolder/updateresortdata.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<style>
+
+  .containersPicture :first-child {
+    display: block;
+  }
+  li {
+    list-style: none;
+  }
+ 
+  * {
+    animation: hgh 1s forwards;
+  }
+  @keyframes hgh {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      /* line-height: 1; */
+      /* line-height: 0; */
+    }
+  }
+</style>
+<!-- StyleSheet ⬆︎⬆︎⬆︎⬆︎⬆︎ -->
+
+
+
+</head>
+<body>
+<!--  -->
+
+
+
+
+<div id="RESORTURLMODAL" class="" tabindex="-1" role="dialog" id="modalSheet" onclick="this.style.display = 'none';">
+  <div class="qr_image_container" role="document">
+    <div class=" rounded-4 shadow qr_image" >
+      <div class="modal-header border-bottom-0">
+       <img id="resort_QRLink" src="Resort QR Link Loading">
+      </div>
+        <a id="resort_QRLink_download" href="" target="_blank" class="btn btn-primary" download>Download</a>      
     </div>
-    <div class="container py-3">
-      <main>
-        <div class="col-md-7">
-          <h2 class="featurette-heading"> We have an under construction Carpooling website and having your website created by us increases the chance having guests in your place  </span></h2>
-          <p class="lead">We provide in your conviniency, a website will be under subdomain for <strong style="color: rgb(0, 107, 228);"><a href="https://treep.today/" target="_blank">https://treep.today</a></strong></p>
-        </div>
-        
-        <br />
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-          <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm">
-              <div class="card-header py-3">
-                <h4 class="my-0 fw-normal"> Plain Website</h4>
-              </div>
-              <div class="card-body">
-                <h1 class="card-title pricing-card-title">₱ 199<small class="text-body-secondary fw-light"> /year</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                  <li>You Provide Pictures</li>
-                  <li>You Provide Brochures</li>
-                  <li>Recommendation to travellers</li>
-                </ul>                
-              </div>
-              <div   id="paypal-button-container-P-6YY77491JA327313EMU7Y7XQ"></div>
-                <script src="https://www.paypal.com/sdk/js?client-id=AZKp29XmANwKqTx3-VdxuiDVnuXihdQBZ_vCRJYOcq6v4xh8fZ5YWbtobAMADBTG1bm4a-N9csgOEgwu&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-                <script>
-                paypal.Buttons({
-                    style: {
-                        shape: 'rect',
-                        color: 'blue',
-                        layout: 'vertical',
-                        label: 'subscribe'
-                    },
-                    createSubscription: function(data, actions) {
-                        return actions.subscription.create({
-                        /* Creates the subscription */
-                        plan_id: 'P-6YY77491JA327313EMU7Y7XQ'
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        alert(data.subscriptionID); // You can add optional success message for the subscriber here
-                    }
-                }).render('#paypal-button-container-P-6YY77491JA327313EMU7Y7XQ'); // Renders the PayPal button
-                </script>
-            </div>
-          </div>
+  </div>
+</div>
+<!--  -->
+    <!-- End -->
 
-          <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm">
-              <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Website + Pictures</h4>
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <a target="_blank" class="btn btn-success" href="https://treep.today/resorts/adventurecampsablayan/">Visit Sample Website</a>
-                    </div>
-                  </div>
-                </div>                
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" style="background-image: url('static/SinglePage/images/services/no_video.png'); background-position:center; background-size:contain; background-repeat:no-repeat; overflow:scroll" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></svg>
 
-                </div>
-              </div>                
-              <div class="card-body">
-                <h1 class="card-title pricing-card-title">₱ 999<small class="text-body-secondary fw-light"> /year</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                  <li>We take pictures for your website</li>
-                  <li>Priority email support</li>
-                  <li>Location Varies</li>
-                </ul>
-              </div>
-              <div id="paypal-button-container-P-2HA61154WP755715HMU7ZEAA"></div>
-            <script>
-            paypal.Buttons({
-                style: {
-                    shape: 'rect',
-                    color: 'gold',
-                    layout: 'vertical',
-                    label: 'subscribe'
-                },
-                createSubscription: function(data, actions) {
-                    return actions.subscription.create({
-                    /* Creates the subscription */
-                    plan_id: 'P-2HA61154WP755715HMU7ZEAA'
-                    });
-                },
-                onApprove: function(data, actions) {
-                    alert(data.subscriptionID); // You can add optional success message for the subscriber here
-                }
-            }).render('#paypal-button-container-P-2HA61154WP755715HMU7ZEAA'); // Renders the PayPal button
-            </script>
-            </div>
+
+
+<!-- Room Packages and Activity Packages⬇︎⬇︎⬇︎⬇︎⬇︎ -->
+
+
+
+
+<div class="">
+    <!-- Resort Background Image Modal Header -->
+  <header  class="header" id="resort_headerImage" style="background-image: url('/resorts/static/resorts/pictureclip/picturetest.png');">
+    <span onclick="document.querySelector('#RESORTURLMODAL').style.display= 'block';" class="header-sub">
+      <h1 id="resort_RealName" class="header-name">Resort Loading....</h1>
+      <div class="header-name-sub">
+        <hr style="padding: 0; margin: 0" />
+        <address id="resort_address" style="padding: 0; margin: 0; color: white;font-weight: 150;">Searching for address </address>
+      </div>
+    </span>
+  </header>
+  <hr>
+  <li class="nav-item">
+    <span class="new-footer-icon-container">
+      <p id="resort_description" style="padding: 10px;font-weight: 400;" > Saying Something about the name.....</p>
+
+    </span>  
+  </li>
+  <!-- RESORT PICTURE -->
+  <div class="row">
+    <div class="col-sm-8">
+      <video style="width: 100%;"  id="resort_promotional_video" data-video-id="" data-account="" preload="metadata" tabindex="-1" loop="" muted="muted" autoplay="" ><source  type="video/mp4"></video>
+    </div>
+    <div class="col-sm-4">
+      <footer class="py-3 my-4">
+        <ul class="nav  border-bottom pb-3 mb-3">
+          <li class="nav-item">
+
             
-          </div>
-          <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm border-primary">
-              <div class="card-header py-3 text-bg-primary border-primary">
-                <h4 class="my-0 fw-normal">Website + Pictures + Video</h4>
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <a target="_blank" class="btn btn-success" href="https://treep.today/resorts/villavicentabeachresort/">Visit Sample Website</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" style="background-image: url('static/SinglePage/images/services/with_video.png'); background-position:center; background-size:contain; background-repeat:no-repeat; overflow:scroll" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></svg>
-                </div>
-              </div>     
-              <div class="card-body">
-                <h1 class="card-title pricing-card-title">₱ 1,499<small class="text-body-secondary fw-light"> /year</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                  <li>We take Picture</li>
-                  <li>Create Video Walk Through</li>
-                  <li>Location Varies</li>
-                </ul>
-              </div>
-              <div id="paypal-button-container-P-8EA09025YF8541728MU7ZF2Y"></div>
-              <script>
-              paypal.Buttons({
-                  style: {
-                      shape: 'rect',
-                      color: 'blue',
-                      layout: 'vertical',
-                      label: 'subscribe'
-                  },
-                  createSubscription: function(data, actions) {
-                      return actions.subscription.create({
-                      /* Creates the subscription */
-                      plan_id: 'P-8EA09025YF8541728MU7ZF2Y'
-                      });
-                  },
-                  onApprove: function(data, actions) {
-                      alert(data.subscriptionID); // You can add optional success message for the subscriber here
-                  }
-              }).render('#paypal-button-container-P-8EA09025YF8541728MU7ZF2Y'); // Renders the PayPal button
-              </script>              
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <table class="table text-center">
-            <thead>
-              <tr>
-                <th style="width: 34%"></th>
-                <th style="width: 22%">Plain Website</th>
-                <th style="width: 22%">Website + Pictures</th>
-                <th style="width: 22%">Website + Pictures + Videos</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row" class="text-start">Pictures</th>
-                <td> 30 + </td>
-                <td> 50 + </td>
-                <td> Unlimited </td>
-              </tr>
-              <tr>
-                <th scope="row" class="text-start">Support</th>
-                <td>Email</td>
-                <td> Email and Mobile Message </td>
-                <td> Email, Message, Video Call </td>
-              </tr>
-            </tbody>
 
-            <tbody>
-              <tr>
-                <th scope="row" class="text-start">Video</th>
-                <td> No</td>
-                <td> You Provide the Video </td>
-                <td> We Create Video for you </td>
-              </tr>
-              <tr>
-                <th scope="row" class="text-start">Recommendation</th>
-                <td>
-                  <svg class="bi" width="24" height="24"><use xlink:href="#check"></use></svg>
-                </td>
-                <td>
-                  <svg class="bi" width="24" height="24"><use xlink:href="#check"></use></svg>
-                </td>
-                <td>
-                  <svg class="bi" width="24" height="24"><use xlink:href="#check"></use></svg>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </main>
-      <h1>Contact Us at <strong>johnwebsiteprojects@gmail.com</strong></h1>
-      for customized domain name and website
+            <i class="new-footer-icon-container">
+              <svg class="bi bi-geo-alt" viewBox="0 0 16 16" width="42px" style="fill: rgb(117, 165, 249)">
+                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
+                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+              </svg>
+              <span id="resort_address2"></span>
+            </i>
+      
+            <li class="nav-item">
+              <i class="new-footer-icon-container">
+                <svg viewBox="0 0 16 16" width="42px" style="fill: rgb(55, 165, 255)">
+                  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"></path>
+                </svg>
+                <span id="resort_contactNumber2">
+                  Loading Resort Contact Number
+                </span>
+              </i>
+      
+              <li class="nav-item">
+                <i class="new-footer-icon-container">
+                  <svg viewBox="0 0 24 16" width="42px" style="fill: rgb(55, 165, 255)">
+                    <path d="M23.9 1.8h-.2L14 11.5c-1.1 1.1-2.8 1.1-3.9 0L.3 1.9c-.1-.1-.1-.1-.2 0-.1 0-.1 0-.1.1v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V2c0-.1 0-.1-.1-.2z"></path>
+                    <path d="M11.1 10.6c.5.5 1.3.5 1.8 0L22.6.9c.1-.1.2-.3.1-.5-.1-.4-.4-.4-.7-.4H2c-.3 0-.6 0-.7.4-.1.2 0 .4.1.5z"></path>
+                  </svg>
+                  <span id="resort_contactEmail">
+                    Loading Resort Contact Email
+                  </span>
+                </i>  
+              </li>
+            </li>
+          </li>
+        </ul>
+        <p class="text-center text-muted">© 2022 Garden Company, Inc</p>
+      </footer>
     </div>
-  </body>
+  </div>
+ 
+
+
+
+  
+</div>
+
+<!--  ACTIvity Accomodation Tour -->
+<div>
+  <span type="button" data-toggle="modal" data-target=".resort_contact_form_modal" class="resort_contact_button contact-us" >Contact Us</span>
+
+ 
+  <div class="row">
+
+
+    <div class="col-sm">
+      <aside class="aside aside-2">
+        <details open>
+          <summary class="head-summary">
+            <h3 class="column-sub-title">Enjoy our</h3>
+            <div>
+              <hr style="margin: 0; padding: 0" />
+            </div>
+            <h2 class="column-title">Activities</h2>
+          </summary>
+          <div id="resort_Activities">
+          </div>
+        </details>
+      </aside>
+    </div>
+    <div class="col-sm">
+
+      <aside class="aside">
+        <details open>
+          <summary class="head-summary">
+            <h3 class="column-sub-title">Get our</h3>
+            <div style="padding-left: 30%; padding-right: 30%">
+              <hr style="margin: 0; padding: 0" />
+            </div>
+            <h2 class="column-title">Special Promotions</h2>
+          </summary>
+          <!-- Tour list object -->
+          <div id="resort_Tour">
+      
+          </div>
+      
+        </details>
+        </aside>
+    </div>
+    <div class="col-sm">
+      <aside class="aside aside-1">
+        <details open>
+        <summary class="head-summary">
+          <h3 class="column-sub-title">Experience our</h3>
+          <div>
+            <hr style="margin: 0; padding: 0" />
+          </div>
+            <h2 class="column-title-">Accomodations</h2>
+          </summary>
+        <div class="room-summary">
+              <!-- Accomodation 1  From Here Create a JavaScript-->
+              <div id="resort_Accomodations">
+    
+              </div>
+    
+              <!-- Accomodation 2 -->
+        </div>
+      </details>
+      <!-- TEST Accomodation Test end-->
+    </aside>
+    </div>
+  </div>
+</div>
+<!-- Room Packages and Activity Packages ⬆︎⬆︎⬆︎⬆︎⬆︎ -->
+
+
+
+
+
+
+
+<div class="wrapper">
+  <article class="main">
+    
+    <!-- Promotional Video ⬇︎⬇︎⬇︎  -->
+    
+  <!-- Promotional Video End ⬆︎⬆︎⬆︎⬆︎⬆︎⬇︎ -->
+
+  <!-- Tour Packages ⬇︎⬇︎⬇︎⬇︎-->
+  <div class="tour-packages">
+    <div>
+
+    </div>
+  </div>
+
+
+
+
+
+</article>
+    <!-- We go now on footer -->
+    <footer class="footer">
+      
+      <br /><br />
+      <div class="mapouter">
+        <div class="gmap_canvas">
+          <iframe width="inherit" height="80vh" id="gmap_canvas" src="https://maps.google.com/maps?q={{resortObject.latitude}},%20{{resortObject.longitude}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"> </iframe><br />
+        </div>
+      </div>
+    </footer>
+
+
+
+
+    <!-- End Wrapper -->
+  </div>    
+
+
+
+
+
+
+</body>
+
+
+
+
+
+<!-- CALENDAR MODAL -->
+<!-- CALENDAR MODAL -->
+<!-- CALENDAR MODAL -->
+<!-- CALENDAR MODAL -->
+<!-- CALENDAR MODAL -->
+<!-- <div class="modal-container-main" style="display: none">
+  <div class="modal-container-sub">
+    <span class="button-close" onclick="closeModal()" class="close">&times;</span>
+    <div class="modal-item-head">
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control custom-field text-contact-input" id="guest_contact" placeholder="name@example.com" />
+        <label for="guest_contact">Your Contact</label>
+      </div>
+      <hr />
+      <div class="input-group" style="padding-bottom: 1rem">
+        <div class="custom-field">
+          <textarea placeholder="Your Message" id="guest_message" aria-label="With textarea" class="text-contact-input" style="height: 150px"></textarea>
+          {% for eachCalendarObject in calendarValues %}
+          <div id="calendar_object_month-{{eachCalendarObject.id}}" style="display: none">{{eachCalendarObject.calendar_html | safe}}</div>
+          {% endfor %}
+          <div>
+            <button onclick="next_calendar_button('previous')" class="button_previous_month btn btn-primary">
+              <svg width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>
+            </button>
+            <button onclick="next_calendar_button('next')" class="button_next_month btn btn-primary">
+              <svg width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="single_calendar_main_container"> </div>
+        </div>
+      </div>
+      <span class="" style="width: 100px">
+        <button onclick="SendGuestMessage()" class="button-send">
+          <svg viewBox="0 0 16 16" width="50%" style="fill: #2196f3">
+            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"></path>
+          </svg>
+        </button>
+      </span>
+      <textarea readonly id="guest_book" class="custom-field text-contact-input" style="display: none; margin: 0 auto; padding-bottom: 1.5rem !important; height: 150px; margin-top: 50px"></textarea>
+    </div>
+  </div>
+</div> -->
+<!-- END CALENDAR -->
+<!-- END CALENDAR -->
+<!-- END CALENDAR -->
+<!-- END CALENDAR -->
+
+<div class="modal fade resort_contact_form_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="padding: 15px; margin: 40px auto;">
+      <form id="resort_contact_form">
+        <input hidden   name="reply_to" id="reply_to" class="form-control" type="text" placeholder="Readonly input here…" readonly>
+        <input hidden  name="to_name" id="to_name" class="form-control" type="text" placeholder="Readonly input here…" readonly>
+  
+          <div class="form-group">
+            <label for="user_resort_contact_email">Email address</label>
+            <input type="email" class="form-control" name="from_name" id="from_name" placeholder="Youremail@example.com">
+          </div>
+          <div class="form-group">
+            <label for="message">your Message</label>
+            <textarea class="form-control" name="message" id="message" rows="3"></textarea>
+          </div>
+          <input  type="submit" id="resort_contact_button" value="Send Email" class="btn btn-outline-warning" style="margin: 0 auto; display: block;">
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- SEND EMAIL -->
+  <!-- https://dashboard.emailjs.com/admin/templates/af010x9 -->
+  <script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+  emailjs.init('kPR5fCmH0j3E0NSyr')
+  const resort_contact_button = document.getElementById('resort_contact_button');
+  const resort_contact_button2 = document.querySelector('.resort_contact_button');
+document.getElementById('resort_contact_form')
+ .addEventListener('submit', function(event) {
+   event.preventDefault();
+   resort_contact_button.value = 'Sending...';
+   const serviceID = 'service_wizvf4w';
+   const templateID = 'template_hzlk188';
+   emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+      resort_contact_button.value = 'Send Email';
+      resort_contact_button.style.display = 'none';
+      resort_contact_button2.style.display = 'none';
+
+      alert('Sent!');
+    }, (err) => {
+      resort_contact_button.value = 'Send Email';
+      alert(JSON.stringify(err));
+    });
+});
+
+// var form = document.getElementById("myForm");
+// function handleForm(event) { event.preventDefault(); } 
+// form.addEventListener('submit', handleForm);
+</script>
+
+
 </html>
