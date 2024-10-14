@@ -16,6 +16,7 @@ function UpdateResortData(resortData) {
     document.querySelector("#resort_promotional_video").setAttribute('src', resortData.resort_promotionalVideo);
     document.querySelector("#resort_QRLink").setAttribute('src',resortData.resort_QRLink)
     document.querySelector("#resort_QRLink_download").setAttribute('href',resortData.resort_QRLink)
+    document.querySelector("#gmap_canvas").setAttribute('src',`https://maps.google.com/maps?q=${resortData.resort_latitude},%20${resortData.resort_longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`)
     
     // Update Resort Contact Form
     document.querySelector("#reply_to").value = `\n\n\n ${resortData.resort_contactNumber}`
@@ -61,16 +62,16 @@ function CreateCarousels(resortData) {
             CarouselMainContainerDetails.appendChild(CarouselSummary)
             data_container.append(CarouselMainContainerDetails)
 
-            package.package_subpackage.forEach(subpackage =>{
+            package.package_subpackage.forEach(subpackage => {
 
 
                 package_item = document.createElement('div')
-                    package_item.className = 'room-item red-red-white'
+                package_item.className = 'room-item red-red-white'
 
                 package_details = document.createElement('details')
-                    package_details.open = true
+                package_details.open = true
                 package_summary = document.createElement('summary')
-                package_summary.id = 'package-'+subpackage.package_id
+                package_summary.id = 'package-' + subpackage.package_id
                 package_summary.textContent = subpackage.package_name
                 package_details.append(package_summary)
                 package_description = document.createElement('p')
@@ -95,7 +96,7 @@ function CreateCarousels(resortData) {
                 
 
                 package_carousel = document.createElement('div')
-                package_carousel.id = 'carousel_image-'+package.resortpackage_id+subpackage.package_id
+                package_carousel.id = 'carousel_image-' + package.resortpackage_id + subpackage.package_id
                 package_carousel.className = 'carousel slide'
                 package_carousel.setAttribute("data-bs-ride", true)
 
@@ -109,14 +110,15 @@ function CreateCarousels(resortData) {
                 package_carousel.append(package_inner_carousel)
                 subpackage.package_image.forEach(function callback(eachImage, index) {
                     carousel_image_container = document.createElement('div')
-                    if(index==0){
+                    if (index == 0) {
                         carousel_image_container.className = 'carousel-item active'
                     } else {
                         carousel_image_container.className = 'carousel-item'
                     }
                     carousel_image_item = document.createElement('img')
-                    carousel_image_item.setAttribute('src',eachImage)
+                    carousel_image_item.setAttribute('src', eachImage)
                     // carousel_image_item.setAttribute('onclick',alert('Make: ',subpackage.package_name))
+                    // carousel_image_item.onclick = function () { alert('Make: ', subpackage.package_name)}
                     
                     carousel_image_container.append(carousel_image_item)
                     package_inner_carousel.append(carousel_image_container)
