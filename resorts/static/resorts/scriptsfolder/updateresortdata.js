@@ -8,6 +8,7 @@ function UpdateResortData(resortData) {
     // Update Resort Details
     document.querySelector("#resort_headerImage").setAttribute('style',`background-image:url(${resortData.resort_headerImage})`)
     document.querySelector("#resort_RealName").innerHTML = resortData.resort_RealName;
+    document.querySelector("#resort_resort_name").innerHTML = resortData.resort_RealName
     document.querySelector("#resort_address").innerHTML = resortData.resort_address;
     document.querySelector("#resort_address2").innerHTML = resortData.resort_address;
     document.querySelector("#resort_description").innerHTML = resortData.resort_description;
@@ -19,7 +20,7 @@ function UpdateResortData(resortData) {
     document.querySelector("#gmap_canvas").setAttribute('src',`https://maps.google.com/maps?q=${resortData.resort_latitude},%20${resortData.resort_longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`)
     
     // Update Resort Contact Form
-    document.querySelector("#reply_to").value = `\n\n\n ${resortData.resort_contactNumber}`
+    document.querySelector("#reply_guto").value = `\n\n\n ${resortData.resort_contactNumber}`
     document.querySelector("#to_name").value = `${resortData.resort_contactEmail}`
 
 
