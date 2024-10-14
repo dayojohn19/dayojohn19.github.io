@@ -1,4 +1,4 @@
-
+// Get resort data and put it all on the Index.html 
 
 
 
@@ -17,14 +17,11 @@ function UpdateResortData(resortData) {
     document.querySelector("#resort_promotional_video").setAttribute('src', resortData.resort_promotionalVideo);
     document.querySelector("#resort_QRLink").setAttribute('src',resortData.resort_QRLink)
     document.querySelector("#resort_QRLink_download").setAttribute('href',resortData.resort_QRLink)
-    document.querySelector("#gmap_canvas").setAttribute('src',`https://maps.google.com/maps?q=${resortData.resort_latitude},%20${resortData.resort_longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`)
-    
+    // document.querySelector("#gmap_canvas").setAttribute('src',`https://maps.google.com/maps?q=${resortData.resort_latitude},%20${resortData.resort_longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`)
+    document.querySelector(".gmap_canvas").innerHTML = `<iframe src="https://maps.google.com/maps?q=${resortData.resort_latitude},%20${resortData.resort_longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed" width="inherit" height="80vh" id="gmap_canvas"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"> </iframe><br />`
     // Update Resort Contact Form
-    document.querySelector("#reply_guto").value = `\n\n\n ${resortData.resort_contactNumber}`
+    document.querySelector("#reply_to").value = `\n\n\n ${resortData.resort_contactNumber}`
     document.querySelector("#to_name").value = `${resortData.resort_contactEmail}`
-
-
-    
     CreateCarousels(resortData)
 }
 
@@ -44,8 +41,6 @@ function CreateCarousels(resortData) {
     CreateEachPackages(tour_data,tour_container)
 
     function CreateEachPackages(resort_data,data_container){
-        console.log('DATA \n\n\n')
-        console.log(resort_data)
         // data = JSON.parse(data)
         // console.log('PARSED: ',data)
         resort_data.forEach(package => {
@@ -68,7 +63,8 @@ function CreateCarousels(resortData) {
 
                 package_item = document.createElement('div')
                 package_item.className = 'room-item red-red-white'
-
+                hrDiv = document.createElement("hr")
+                package_item.append(hrDiv)
                 package_details = document.createElement('details')
                 package_details.open = true
                 package_summary = document.createElement('summary')
@@ -174,66 +170,43 @@ function CreateCarousels(resortData) {
   
 
 
+function Update_Resort_Data_From_URL(resort_url){
+        let req = new XMLHttpRequest();
+    // https://jsonbin.io/app/bins
+    // to Use change the last  https://api.jsonbin.io/v3/b/<BIN_ID>
+      req.open("GET", `https://api.jsonbin.io/v3/b/670d1993acd3cb34a896c20e`, true);
+      req.setRequestHeader("Content-Type", "application/json");
+      req.setRequestHeader("X-Access-Key", "$2a$10$0DnmOTXD4FH6pg/Ww0EcvOgU5TufJYVYizT0G0B1wLaocr99G8iUS");
+      req.send();
 
 
-
-// function createTourPackageContainer(tourdata) {
-//     document.createElement('')
-// }
-// function createTourPackageContainer(tourdata) {
-//         tourdata.forEach((tour_element) => {
-//         for (i = 0; i != tour_element.package_subpackage.length; i++){
-//             console.log(i)
-//             sub_package_item = tour_element.package_subpackage[i]
-//             TourSubContainer = `
-//                     <div class="carousel-inner">
-//                       <div id="sub-package-img-${sub_package_item.package_id}" class="carousel-item">
-//                       ${sub_package_item.package_image.forEach(element => {
-//                         return `<img id="sub-image" src=${element}  class="d-block w-100" alt="..." id="{{images.id}}}}-{{acc.id}}-{{sub.id}}-Slides" onclick="PutToBlockContainer(id)" />`
-//                       })}
-//                         <img src="/resorts/static/resorts/pictureclip/picturetest.png" class="d-block w-100" alt="..." id="{{images.id}}}}-{{acc.id}}-{{sub.id}}-Slides" onclick="PutToBlockContainer(id)" />
-//                       </div>
-//                     </div>
-//                     <span>
-//                       <span id="sub-package-name-${sub_package_item.package_id}>
-//                         ${sub_package_item.package_name}
-//                       </span>
-//                       <p>${sub_package_item.package_description}</p>
-//                       <p>${sub_package_item.package_information}</p>
-//                       <button class="button-book" onclick="bookNow('Booking ${sub_package_item.package_name}\n ₱${sub_package_item.package_price}')">Book</button>
-//                     </span>
-
-//             `
-//         }
-
+      
+      req.onreadystatechange = () => {
+      if (req.readyState == XMLHttpRequest.DONE) {
+        resort_lists = JSON.parse(req.response).record
+        console.log('Resort Lists: ',resort_lists,resort_url)
+            // request again to the site
+            req.open("GET",`https://api.jsonbin.io/v3/b/${resort_lists[resort_url]}`, true)
+            req.setRequestHeader("Content-Type", "application/json");
+            req.setRequestHeader("X-Access-Key", "$2a$10$0DnmOTXD4FH6pg/Ww0EcvOgU5TufJYVYizT0G0B1wLaocr99G8iUS");            
+            req.send();
+            req.onreadystatechange = () => {
+                if (req.readyState == XMLHttpRequest.DONE) {
+                    resort_allData = req.response.record
+                    all_resorts_data = JSON.parse(req.response).record[0]
+                    localStorage.setItem(resort_url,JSON.stringify(all_resorts_data) );
+                    // What to do with all the data
+                    saved_resort_data = JSON.parse(localStorage[resort_url])
+                    // console.log('Saved New Resort in the Storage',saved_resort_data)
+                    UpdateResortData(saved_resort_data)
+                    return 
+                }
+            }
+        }
+      };
     
-//         TourContainer = `
-//                 <details open class="package-summary ">
-//                 <summary class="sub-package-summary badge" >
-//                     <span id="package-title" class=""> ${tour_element.package_title} </span>
-//                 </summary>
-//                     <li style="margin-top: 3rem">
-//                     <div id="carousel-tour-package-${tour_element.resortpackage_id}" class="carousel slide" data-bs-ride="carousel">
-//                     ${TourSubContainer}
-//                     </div>
-//                     <hr>
-//                     </li>
-//                 </details>`
-//         })
-
-//     console.log(typeof (CreatedTourContainer));
-//     return TourContainer
-        
-// }function getPics() {} //just for this demo
-// const imgs = document.querySelectorAll('img');
-// // const fullPage = document.querySelector('#fullpage');
-
-// imgs.forEach(img => {
-//     console.log('not click')
-//   img.addEventListener('click', function() {
-//     console.log('click')
-//   });
-// });
 
 
+
+}
 

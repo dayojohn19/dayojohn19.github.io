@@ -16,42 +16,32 @@
 
 
 <!-- SCRIPT FOR API  -->
-<script defer>
+<script type="text/script" src="/resorts/static/resorts/scriptsfolder/resortDataGet.js">
+  
+</script>
+<script>
+
 addEventListener("DOMContentLoaded", (event) => {
-
-
-  let req = new XMLHttpRequest();
-  // https://jsonbin.io/app/bins
-  // to Use change the last  https://api.jsonbin.io/v3/b/<BIN_ID>
-    req.open("GET", "https://api.jsonbin.io/v3/b/6707f0d0e41b4d34e4406955", true);
-    req.setRequestHeader("Content-Type", "application/json");
-    req.setRequestHeader("X-Access-Key", "$2a$10$0DnmOTXD4FH6pg/Ww0EcvOgU5TufJYVYizT0G0B1wLaocr99G8iUS");
-    req.send();
-    req.onreadystatechange = () => {
-    if (req.readyState == XMLHttpRequest.DONE) {
-      resortData = JSON.parse(req.response).record[0]
-      // /resorts/static/resorts/scriptsfolder/updateresortdata.js
-      UpdateResortData(resortData)
-      }
-    };
-
-
-
-});
-
-
-
-
+  // console.log("Searching for saved resort..\n\n")
+    resort_url = document.URL.split("#").pop()
+    console.log(resort_url)
+    if (localStorage[resort_url]){
+        // console.log('Found Saved Resort..\n\n')
+        UpdateResortData(JSON.parse(localStorage[resort_url]))
+        return
+    } else {
+        // console.log('Saving New Resort')
+        resort_current_url = document.URL
+        Update_Resort_Data_From_URL(resort_url)
+    }
+  });
 
 </script>
-
-
-
 <!-- StylesHeet -->
 <link rel="stylesheet" href="/resorts/static/resorts/layout.css">
 <link rel="stylesheet" href="/resorts/static/resorts/bootstrap/css/master.css" />
 <script src="/resorts/static/resorts/bootstrap/js/bootstrap.js"></script>
-<script src="/resorts/static/resorts/scriptsfolder/updateresortdata.js"></script>
+<script src="/resorts/static/resorts/scriptsfolder/resortDataUpdate.js"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -81,41 +71,27 @@ addEventListener("DOMContentLoaded", (event) => {
     }
   }
 </style>
-<!-- StyleSheet ⬆︎⬆︎⬆︎⬆︎⬆︎ -->
 
 
 
 </head>
 <body style='background-image: url("https://sitecore-cd.shangri-la.com/-/media/3311/website.png?h=500&iar=0&w=1500&hash=D7FCF908B1DDE19BB61A9232F21893C2");'> 
-<!--  -->
-
-
-
-
 <div id="RESORTURLMODAL" class="" tabindex="-1" role="dialog" id="modalSheet" onclick="this.style.display = 'none';">
   <div class="qr_image_container" role="document">
     <div class=" rounded-4 shadow qr_image" >
       <div class="modal-header border-bottom-0">
-       <img id="resort_QRLink" src="Resort QR Link Loading">
+       <img id="resort_QRLink" >
       </div>
         <a id="resort_QRLink_download" href="" target="_blank" class="btn btn-primary" download>Download</a>      
     </div>
   </div>
 </div>
-<!--  -->
-    <!-- End -->
-
-
-
-
-<!-- Room Packages and Activity Packages⬇︎⬇︎⬇︎⬇︎⬇︎ -->
 
 
 
 
 <div class="">
-    <!-- Resort Background Image Modal Header -->
-  <header  class="header" id="resort_headerImage" style="background-image: url('/resorts/static/resorts/pictureclip/picturetest.png');">
+  <header  class="header" id="resort_headerImage" >
     <span onclick="document.querySelector('#RESORTURLMODAL').style.display= 'block';" class="header-sub">
       <h1 id="resort_RealName" class="header-name">Resort Loading....</h1>
       <div class="header-name-sub">
@@ -128,21 +104,16 @@ addEventListener("DOMContentLoaded", (event) => {
   <li class="nav-item">
     <span class="new-footer-icon-container">
       <p id="resort_description" style="padding: 10px;font-weight: 400;" > Saying Something about the name.....</p>
-
     </span>  
   </li>
-  <!-- RESORT PICTURE -->
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8" style="padding: 0 !important;">
       <video style="width: 100%;"  id="resort_promotional_video" data-video-id="" data-account="" preload="metadata" tabindex="-1" loop="" muted="muted" autoplay="" ><source  type="video/mp4"></video>
     </div>
     <div class="col-sm-4">
       <footer class="py-3 my-4">
         <ul class="nav  border-bottom pb-3 mb-3">
           <li class="nav-item">
-
-            
-
             <i class="new-footer-icon-container">
               <svg class="bi bi-geo-alt" viewBox="0 0 16 16" width="42px" style="fill: rgb(117, 165, 249)">
                 <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
@@ -178,26 +149,18 @@ addEventListener("DOMContentLoaded", (event) => {
         <p class="text-center text-muted">© 2022 Garden Company, Inc</p>
       </footer>
     </div>
-  </div>
- 
-
-
-
-  
+  </div>  
 </div>
 
-<!--  ACTIvity Accomodation Tour -->
+
 <div>
   <span type="button" data-toggle="modal" data-target=".resort_contact_form_modal" class="resort_contact_button contact-us" >Contact Us</span>
-
- 
+  <!-- The three main data -->
   <div class="row">
-
-
     <div class="col-sm">
       <aside class="aside aside-2">
         <details open>
-          <summary class="head-summary">
+          <summary class="activities-summary">
             <h3 class="column-sub-title">Enjoy our</h3>
             <div>
               <hr style="margin: 0; padding: 0" />
@@ -210,7 +173,6 @@ addEventListener("DOMContentLoaded", (event) => {
       </aside>
     </div>
     <div class="col-sm">
-
       <aside class="aside">
         <details open>
           <summary class="head-summary">
@@ -220,18 +182,16 @@ addEventListener("DOMContentLoaded", (event) => {
             </div>
             <h2 class="column-title">Special Promotions</h2>
           </summary>
-          <!-- Tour list object -->
           <div id="resort_Tour">
-      
+            <!-- Here will be inserted the Activities/Tour  -->
           </div>
-      
         </details>
         </aside>
     </div>
     <div class="col-sm">
       <aside class="aside aside-1">
         <details open>
-        <summary class="head-summary">
+        <summary class="room-summary">
           <h3 class="column-sub-title">Experience our</h3>
           <div>
             <hr style="margin: 0; padding: 0" />
@@ -239,20 +199,15 @@ addEventListener("DOMContentLoaded", (event) => {
             <h2 class="column-title-">Accomodations</h2>
           </summary>
         <div class="room-summary">
-              <!-- Accomodation 1  From Here Create a JavaScript-->
               <div id="resort_Accomodations">
-    
+              <!-- Here will be inserted the Accomodations Resort -->
               </div>
-    
-              <!-- Accomodation 2 -->
         </div>
       </details>
-      <!-- TEST Accomodation Test end-->
     </aside>
     </div>
   </div>
 </div>
-<!-- Room Packages and Activity Packages ⬆︎⬆︎⬆︎⬆︎⬆︎ -->
 
 
 
@@ -262,37 +217,20 @@ addEventListener("DOMContentLoaded", (event) => {
 
 <div class="wrapper">
   <article class="main">
-    
-    <!-- Promotional Video ⬇︎⬇︎⬇︎  -->
-    
-  <!-- Promotional Video End ⬆︎⬆︎⬆︎⬆︎⬆︎⬇︎ -->
-
   <!-- Tour Packages ⬇︎⬇︎⬇︎⬇︎-->
   <div class="tour-packages">
-    <div>
-
-    </div>
+    <!-- Here will be inserted the SPECIAL PROMOTIONS ITEMS served as TOUR PACKAGES -->
   </div>
-
-
-
-
-
 </article>
     <!-- We go now on footer -->
     <footer class="footer">
-      
       <br /><br />
       <div class="mapouter">
         <div class="gmap_canvas">
-          <iframe width="inherit" height="80vh" id="gmap_canvas" src="https://maps.google.com/maps?q={{resortObject.latitude}},%20{{resortObject.longitude}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"> </iframe><br />
+          <!-- <iframe width="inherit" height="80vh" id="gmap_canvas"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"> </iframe><br /> -->
         </div>
       </div>
     </footer>
-
-
-
-
     <!-- End Wrapper -->
   </div>    
 
@@ -358,6 +296,9 @@ addEventListener("DOMContentLoaded", (event) => {
 <!-- END CALENDAR -->
 <!-- END CALENDAR -->
 
+
+
+<!-- MODAL TO SEND EMAIL -->
 <div class="modal fade resort_contact_form_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content" style="padding: 15px; margin: 40px auto;">
@@ -378,38 +319,11 @@ addEventListener("DOMContentLoaded", (event) => {
     </div>
   </div>
 </div>
-
   <!-- SEND EMAIL -->
   <!-- https://dashboard.emailjs.com/admin/templates/af010x9 -->
-  <script type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script type="text/javascript">
-  emailjs.init('kPR5fCmH0j3E0NSyr')
-  const resort_contact_button = document.getElementById('resort_contact_button');
-  const resort_contact_button2 = document.querySelector('.resort_contact_button');
-document.getElementById('resort_contact_form')
- .addEventListener('submit', function(event) {
-   event.preventDefault();
-   resort_contact_button.value = 'Sending...';
-   const serviceID = 'service_wizvf4w';
-   const templateID = 'template_hzlk188';
-   emailjs.sendForm(serviceID, templateID, this)
-    .then(() => {
-      resort_contact_button.value = 'Send Email';
-      resort_contact_button.style.display = 'none';
-      resort_contact_button2.style.display = 'none';
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript" src="/resorts/static/resorts/scriptsfolder/sendEmail.js"></script>
 
-      alert('Sent!');
-    }, (err) => {
-      resort_contact_button.value = 'Send Email';
-      alert(JSON.stringify(err));
-    });
-});
-
-// var form = document.getElementById("myForm");
-// function handleForm(event) { event.preventDefault(); } 
-// form.addEventListener('submit', handleForm);
-</script>
 
 
 </html>
