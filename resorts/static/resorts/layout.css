@@ -1,4 +1,12 @@
-
+body {
+  background-image: url("https://sitecore-cd.shangri-la.com/-/media/3311/website.png?h=500&iar=0&w=1500&hash=D7FCF908B1DDE19BB61A9232F21893C2");
+}
+.col-sm-8 { 
+  padding: 0 !important;
+}
+col-sm-4 {
+  padding: 0 !important;
+}
 footer {
   font-family: Ayuthaya;
 font-size: small;
@@ -657,7 +665,7 @@ img {
   }
 
   .room-item {
-    margin-top: 3em;
+    margin-top: 3em !important;
     padding: 0.5rem;
   }
 
@@ -956,6 +964,7 @@ td:hover {
 }
 
 .red-red-white {
+  margin-top: 3em;
   /* border: 1.5px solid rgb(255, 230, 230);
   background-color: rgb(255, 246, 246); */
   border-radius: 4px;
