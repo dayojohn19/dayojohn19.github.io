@@ -16,9 +16,10 @@
 
 
 <!-- SCRIPT FOR API  -->
-<script type="text/script" src="/resorts/static/resorts/scriptsfolder/resortDataGet.js">
-  
-</script>
+<script type="text/script" src="/resorts/static/resorts/scriptsfolder/resortDataGet.js"></script>
+<script type="text/script" src="/resorts/static/resorts/scriptsfolder/calendarScripts.js"></script>
+
+
 <script>
 
 addEventListener("DOMContentLoaded", (event) => {
@@ -34,11 +35,23 @@ addEventListener("DOMContentLoaded", (event) => {
         resort_current_url = document.URL
         Update_Resort_Data_From_URL(resort_url)
     }
+
+    page_buttons = document.querySelectorAll('button')
+    page_buttons.forEach(element => {
+      element.onclick() = console.log('clicked button')
+    });
+
   });
 
 </script>
 <!-- StylesHeet -->
-<link rel="stylesheet" href="/resorts/static/resorts/layout.css">
+<link rel="stylesheet" href="/resorts/static/resorts/stylesfolder/layout.css">
+
+<!-- CALENDAR -->
+<link rel="stylesheet" href="/resorts/static/resorts/stylesfolder/calendarStyle.css">
+<link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+
 <link rel="stylesheet" href="/resorts/static/resorts/bootstrap/css/master.css" />
 <script src="/resorts/static/resorts/bootstrap/js/bootstrap.js"></script>
 <script src="/resorts/static/resorts/scriptsfolder/resortDataUpdate.js"></script>
@@ -311,11 +324,41 @@ addEventListener("DOMContentLoaded", (event) => {
             <input type="email" class="form-control" name="from_name" id="from_name" placeholder="Youremail@example.com">
           </div>
           <div class="form-group">
-            <label for="message">your Message</label>
-            <textarea class="form-control" name="message" id="message" rows="3"></textarea>
+            <label for="message">Your Message</label>
+            <textarea style="min-height: 30vh;" class="form-control" name="message" id="message" rows="3"></textarea>
           </div>
           <input  type="submit" id="resort_contact_button" value="Send Email" class="btn btn-outline-warning" style="margin: 0 auto; display: block;">
       </form>
+      <hr>
+      <small>Select Dates</small>
+      <div class="calendar-container">
+        <header class="calendar-header">
+            <p class="calendar-current-date"></p>
+            <div class="calendar-navigation">
+                <span id="calendar-prev" 
+                      class="material-symbols-rounded">
+                    chevron_left
+                </span>
+                <span id="calendar-next" 
+                      class="material-symbols-rounded">
+                    chevron_right
+                </span>
+            </div>
+        </header>
+
+        <div class="calendar-body">
+            <ul class="calendar-weekdays">
+                <li>Sun</li>
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Wed</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li>Sat</li>
+            </ul>
+            <ul class="calendar-dates"></ul>
+        </div>
+    </div>
     </div>
   </div>
 </div>
@@ -323,7 +366,7 @@ addEventListener("DOMContentLoaded", (event) => {
   <!-- https://dashboard.emailjs.com/admin/templates/af010x9 -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="text/javascript" src="/resorts/static/resorts/scriptsfolder/sendEmail.js"></script>
-
+  <script src="/resorts/static/resorts/scriptsfolder/calendarScripts.js"></script>
 
 
 </html>

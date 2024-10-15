@@ -395,6 +395,7 @@ body {
 .sub-package-summary{
   font-size: 20px;
   font-weight: 100;
+  text-align: center  ;
 }
 
 .package-summary {
@@ -724,7 +725,7 @@ ul {
   content: url("arrow.svg");
 } */
 details  >summary::after {
-  content: url("/resorts/static/resorts/arrow.svg");
+  content: url("/resorts/static/resorts/stylesfolder/arrow.svg");
 }
 details[open] >summary::after {
   /* content: url("/resorts/static/resorts/arrow2.svg"); */

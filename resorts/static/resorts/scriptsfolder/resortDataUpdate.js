@@ -48,6 +48,9 @@ function CreateCarousels(resortData) {
             CarouselMainContainerDetails.className = 'package-summary'
             CarouselMainContainerDetails.open = true
         
+
+ 
+
             CarouselSummary = document.createElement('summary') 
             CarouselSummary.className='sub-package-summary'
     
@@ -78,6 +81,14 @@ function CreateCarousels(resortData) {
                 package_information.className = 'sub-information'
                 package_information.textContent = subpackage.package_information
                 package_details.append(package_information)
+                package_inquire_button = document.createElement('button')
+                package_inquire_button.innerHTML = 'Inquire'
+                package_inquire_button.className = 'btn btn-outline-secondary btn-sm'
+                package_inquire_button.onclick = function () {
+                    Inquire_Now_Append(`Inquiring for \n\n  ${subpackage.package_name},\n\n  ${subpackage.package_information}\n`)
+                }
+
+    
                 // package_book_button = document.createElement('button')
                 // package_book_button.className='button-book'
                 // package_book_button.setAttribute('onclick',alert('Make: ',subpackage.package_name))
@@ -156,7 +167,10 @@ function CreateCarousels(resortData) {
                     button_prev.append(button_next)
                     package_inner_carousel.append(button_ne)
 
-                
+    
+                    CarouselMainContainerDetails.append(document.createElement('br'))
+                    CarouselMainContainerDetails.append(package_inquire_button)
+                    CarouselMainContainerDetails.append(hrDiv)
                 // CarouselMainContainerDetails.append(package_inner_carousel)
 
             })
@@ -168,7 +182,10 @@ function CreateCarousels(resortData) {
 
 }
   
-
+function Inquire_Now_Append(inquiredata) {
+    initial_message = document.querySelector("#message").value = inquiredata
+    document.querySelector(".resort_contact_button").click()
+}
 
 function Update_Resort_Data_From_URL(resort_url){
         let req = new XMLHttpRequest();
