@@ -113,7 +113,6 @@ addEventListener("DOMContentLoaded", (event) => {
       </div>
     </span>
   </header>
-  <hr>
   <li class="nav-item">
     <span class="new-footer-icon-container">
       <p id="resort_description" style="padding: 10px;font-weight: 400;" > Saying Something about the name.....</p>
@@ -121,7 +120,8 @@ addEventListener("DOMContentLoaded", (event) => {
   </li>
   <div class="row">
     <div class="col-sm-8" style="padding: 0 !important;">
-      <video style="width: 100%;"  id="resort_promotional_video" data-video-id="" data-account="" preload="metadata" tabindex="-1" loop="" muted="muted" autoplay="" ><source  type="video/mp4"></video>
+      <video style="width: 100%;" controls="1" id="resort_promotional_video" data-video-id="" data-account="" preload="metadata" tabindex="1" loop="" muted="muted" autoplay="" ><source  type="video/mp4"></video>
+      <!-- <iframe width="auto" height="auto" src="https://www.youtube.com/embed/IO2mQBFuBCI?si=pruroFqdBudupz_s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
     </div>
     <div class="col-sm-4">
       <footer class="py-3 my-4">
@@ -190,9 +190,7 @@ addEventListener("DOMContentLoaded", (event) => {
         <details open>
           <summary class="head-summary">
             <h3 class="column-sub-title">Get our</h3>
-            <div style="padding-left: 30%; padding-right: 30%">
-              <hr style="margin: 0; padding: 0" />
-            </div>
+            <hr style="margin: 0; padding: 0" />
             <h2 class="column-title">Special Promotions</h2>
           </summary>
           <div id="resort_Tour">
