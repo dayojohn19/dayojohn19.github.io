@@ -1104,3 +1104,15 @@ box-shadow: 0px 0px 30px gold;
   box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.4);
   border-radius: 8px 8px 8px 0;
 }
+
+
+.modal-content {
+  background-image: url('https://sitecore-cd.shangri-la.com/-/media/3311/website.png'); padding: 15px; margin: 40px auto;
+}
+
+.form-control:focus, .form-control:active {
+  background: transparent;
+}
+#message {
+  background:transparent;
+}
