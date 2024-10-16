@@ -4,10 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script async src="https://imgbb.com/upload.js"></script>
 </head>
 <body>
     
+<input type="file" id="input_img" onchange="fileChange()" accept="image/*">
+    <script>
 
-    <iframe width="auto" height="auto" src="https://www.youtube.com/embed/IO2mQBFuBCI?si=pruroFqdBudupz_s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+
+
+
+function fileChange(){
+var file = document.getElementById('input_img');
+var form = new FormData();
+form.append("image", file.files[0])
+
+var settings = {
+  "url": "https://api.imgbb.com/1/upload?key=ca7f3a26f5fb6343337e4a4f02c07b12",
+  "method": "POST",
+  "timeout": 0,
+  "processData": false,
+  "mimeType": "multipart/form-data",
+  "contentType": false,
+  "data": form
+};
+
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  var jx = JSON.parse(response);
+  console.log(jx.data.url);
+
+
+});
+
+}
+
+
+    </script>
 </body>
 </html>
