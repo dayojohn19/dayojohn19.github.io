@@ -87,6 +87,16 @@
       'This place meant so much to me because _____.',
       "One thing I'll never forget about this place is _____."
     ],
+    fr: [
+      'Le souvenir que je garderai toujours d’ici est _____.',
+      'Je n’oublierai jamais cet endroit parce que _____.',
+      'Cet endroit me rappellera toujours _____.',
+      'Quand je pense à cet endroit, je me souviens de _____.',
+      'Ce qui a rendu cet endroit inoubliable, c’est _____.',
+      'Le moment qui m’est resté ici est _____.',
+      'Cet endroit comptait beaucoup pour moi parce que _____.',
+      'Une chose que je n’oublierai jamais de cet endroit est _____.'
+    ],
     ko: [
       '이곳에서 가장 오래 기억에 남을 순간은 _____.',
       '이곳을 절대 잊지 못할 이유는 _____.',
@@ -150,6 +160,47 @@
       suggestionNeedText: 'Please enter your suggestion.',
       suggestionSent: 'Thanks for suggestions',
       suggestionFailed: 'Could not send suggestion right now.'
+    },
+    fr: {
+      brandTitle: 'Carte Postale Garden Home',
+      welcome: 'Bienvenue, {name}',
+      guest: 'Invité',
+      themeToLight: 'Passer au thème clair',
+      themeToDark: 'Passer au thème sombre',
+      eyebrow: 'SOUVENIRS, RASSEMBLÉS ET PARTAGÉS',
+      subtext: 'Collectez des moments, voyagez facilement et partagez vos souvenirs.',
+      enterAccount: 'Entrez votre compte',
+      username: 'Nom d’utilisateur',
+      userId: 'ID utilisateur',
+      enterUsername: 'Entrez le nom d’utilisateur',
+      enterUserId: 'Entrez l’ID utilisateur',
+      saveAndContinue: 'Enregistrer et continuer',
+      loadingImage: 'Chargement de l’image...',
+      scannedPostcardAlt: 'Carte postale scannée',
+      location: 'Lieu',
+      collected: 'Collecté',
+      collector: 'Collectionneur',
+      uploading: 'Téléversement...',
+      uploadPicture: 'Téléverser une image',
+      collectionMemory: 'Souvenirs de cartes postales',
+      noCollectionMemory: 'Aucun souvenir de collection pour le moment.',
+      gridTitle: 'Autrefois visité, aujourd’hui souvenir.',
+      noPostcardData: 'Aucune donnée de carte postale trouvée pour ce compte.',
+      fetchError: 'Impossible de récupérer les données. Vérifiez le nom d’utilisateur et l’ID utilisateur.',
+      memoryPromptFallback: 'Quel est votre souvenir de cet endroit ?',
+      uploadNeedCredentials: 'Veuillez définir le nom d’utilisateur et l’ID utilisateur avant de téléverser.',
+      uploadFailed: 'Le téléversement a échoué.',
+      uploadResponseMissing: 'La réponse de téléversement ne contient pas la liste des fichiers enregistrés.',
+      uploadingFiles: ({ count }) => `Téléversement de ${count} fichier${count > 1 ? 's' : ''}...`,
+      uploadedFiles: ({ count }) => `${count} fichier${count > 1 ? 's' : ''} téléversé${count > 1 ? 's' : ''} avec succès.`,
+      enterBothCredentials: 'Veuillez saisir le nom d’utilisateur et l’ID utilisateur.',
+      imagePreview: 'Aperçu de l’image',
+      suggestionPlaceholder: 'Dites-nous ou donnez-nous des suggestions',
+      sendSuggestion: 'Envoyer une suggestion',
+      sendingSuggestion: 'Envoi...',
+      suggestionNeedText: 'Veuillez saisir votre suggestion.',
+      suggestionSent: 'Merci pour vos suggestions',
+      suggestionFailed: 'Impossible d’envoyer la suggestion pour le moment.'
     },
     ko: {
       brandTitle: '가든 홈 엽서',
@@ -237,6 +288,7 @@
 
   const SUPPORTED_LANGUAGES = [
     { value: 'en', label: 'EN' },
+    { value: 'fr', label: 'Français' },
     { value: 'ko', label: '한국어' },
     { value: 'zh', label: '中文' }
   ];
@@ -278,6 +330,7 @@
   function getLanguageLocale() {
     if (currentLanguage === 'ko') return 'ko-KR';
     if (currentLanguage === 'zh') return 'zh-CN';
+    if (currentLanguage === 'fr') return 'fr-FR';
     return 'en-US';
   }
 
