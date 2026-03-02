@@ -1023,7 +1023,7 @@
           <div class="postcard-meta" id="scanned-postcard-meta">
             <h3>{scannedPostcardDetails.title}</h3>
             <div class="meta-grid">
-              <p><span>{t('location')}</span>{scannedPostcardDetails.location}</p>
+              <p>{scannedPostcardDetails.location}</p>
               <p><span>{t('collected')}</span>{formatCollectedDate(scannedPostcardDetails.collected)}</p>
               <p><span>{t('collector')}</span>{scannedPostcardDetails.collector}</p>
             </div>
