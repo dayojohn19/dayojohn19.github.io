@@ -50,11 +50,19 @@
   const UPLOAD_IMAGE_FIELD = getMarkdownValue('UPLOAD_IMAGE_FIELD', '');
   const API_USERNAME = getMarkdownValue('API_USERNAME', '');
   const API_USER_ID = getMarkdownValue('API_USER_ID', '');
+  const EMAILJS_PUBLIC_KEY = 'kPR5fCmH0j3E0NSyr';
+  const EMAILJS_SERVICE_ID = 'service_jv335d7';
+  const EMAILJS_TEMPLATE_ID = 'template_hzlk188';
+  const EMAILJS_REPLY_TO = 'dayo_john16@yahoo.com';
+  const EMAILJS_TO_NAME = 'dayo_john16@yahoo.com';
+  const SUGGESTION_COOLDOWN_MS = 60 * 60 * 1000;
+  const SUGGESTION_LAST_SENT_KEY_PREFIX = 'postcard_last_suggestion_at';
   const LOCAL_STORAGE_USERNAME_KEY = getMarkdownValue(
     'LOCAL_STORAGE_USERNAME_KEY',
     'postcard_username'
   );
   const LOCAL_STORAGE_USER_ID_KEY = getMarkdownValue('LOCAL_STORAGE_USER_ID_KEY', 'postcard_user_id');
+  const LOCAL_STORAGE_CONTACT_KEY = getMarkdownValue('LOCAL_STORAGE_CONTACT_KEY', 'postcard_contact');
   const LOCAL_STORAGE_THEME_KEY = getMarkdownValue('LOCAL_STORAGE_THEME_KEY', 'postcard_theme');
   const LOCAL_STORAGE_LANGUAGE_KEY = getMarkdownValue('LOCAL_STORAGE_LANGUAGE_KEY', 'postcard_language');
   const POSTCARD_DETAILS_API_BASE_URL = normalizeLookApiBaseUrl(API_BASE_URL);
@@ -123,8 +131,8 @@
       collector: 'Collector',
       uploading: 'Uploading...',
       uploadPicture: 'Upload picture',
-      collectionMemory: 'Collection Memory',
-      noCollectionMemory: 'No collection memory found yet.',
+      collectionMemory: 'Post Card Memories',
+      noCollectionMemory: '',
       gridTitle: 'Once There, Now a Memory.',
       noPostcardData: 'No postcard data found for this account.',
       fetchError: 'Could not fetch data. Check username and userID.',
@@ -135,7 +143,13 @@
       uploadingFiles: ({ count }) => `Uploading ${count} file${count > 1 ? 's' : ''}...`,
       uploadedFiles: ({ count }) => `Uploaded ${count} file${count > 1 ? 's' : ''} successfully.`,
       enterBothCredentials: 'Please enter both username and userID.',
-      imagePreview: 'Image preview'
+      imagePreview: 'Image preview',
+      suggestionPlaceholder: 'Tell or give us suggestions',
+      sendSuggestion: 'Send suggestion',
+      sendingSuggestion: 'Sending...',
+      suggestionNeedText: 'Please enter your suggestion.',
+      suggestionSent: 'Thanks for suggestions',
+      suggestionFailed: 'Could not send suggestion right now.'
     },
     ko: {
       brandTitle: '가든 홈 엽서',
@@ -170,7 +184,13 @@
       uploadingFiles: ({ count }) => `${count}개 파일 업로드 중...`,
       uploadedFiles: ({ count }) => `${count}개 파일 업로드 완료.`,
       enterBothCredentials: '사용자 이름과 사용자 ID를 모두 입력하세요.',
-      imagePreview: '이미지 미리보기'
+      imagePreview: '이미지 미리보기',
+      suggestionPlaceholder: '건의사항을 입력하세요',
+      sendSuggestion: '건의 보내기',
+      sendingSuggestion: '전송 중...',
+      suggestionNeedText: '건의사항을 입력해주세요.',
+      suggestionSent: '건의해 주셔서 감사합니다',
+      suggestionFailed: '지금은 건의를 보낼 수 없습니다.'
     },
     zh: {
       brandTitle: '花园之家明信片',
@@ -205,7 +225,13 @@
       uploadingFiles: ({ count }) => `正在上传 ${count} 个文件...`,
       uploadedFiles: ({ count }) => `成功上传 ${count} 个文件。`,
       enterBothCredentials: '请输入用户名和用户ID。',
-      imagePreview: '图片预览'
+      imagePreview: '图片预览',
+      suggestionPlaceholder: '请输入建议内容',
+      sendSuggestion: '发送建议',
+      sendingSuggestion: '发送中...',
+      suggestionNeedText: '请输入建议内容。',
+      suggestionSent: '感谢您的建议',
+      suggestionFailed: '暂时无法发送建议。'
     }
   };
 
@@ -225,6 +251,10 @@
   let uploadInput;
   let uploadImageField = UPLOAD_IMAGE_FIELD;
   let showUploadPictureButton = false;
+  let suggestionSenderContact = '';
+  let suggestionMessage = '';
+  let isSendingSuggestion = false;
+  let isEmailJsReady = false;
   let imageFieldPlaceholder = MEMORY_PROMPTS_BY_LANGUAGE.en[0];
   let inputUsername = '';
   let inputUserId = '';
@@ -789,7 +819,118 @@
     lightboxImageAlt = t('imagePreview');
   }
 
+  function getSuggestionLastSentKey(username) {
+    const normalizedUsername = normalizeCredential(username);
+    return `${SUGGESTION_LAST_SENT_KEY_PREFIX}:${normalizedUsername || 'guest'}`;
+  }
+
+  function getSuggestionCooldownMessage(msRemaining) {
+    const totalMinutes = Math.ceil(msRemaining / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    if (hours > 0) {
+      return `You can send another suggestion in ${hours}h ${minutes}m.`;
+    }
+
+    return `You can send another suggestion in ${minutes}m.`;
+  }
+
+  async function sendSuggestion() {
+    const guestMessage = suggestionMessage.trim();
+    let senderContact = suggestionSenderContact.trim();
+
+    if (!guestMessage) {
+      alert(t('suggestionNeedText'));
+      return;
+    }
+
+    if (!window.emailjs || !isEmailJsReady) {
+      alert(t('suggestionFailed'));
+      return;
+    }
+
+    const existingUsername = activeUsername?.trim();
+
+    if (!existingUsername) {
+      const promptedUsername = window.prompt('Please your name');
+
+      if (!promptedUsername?.trim()) {
+        return;
+      }
+
+      activeUsername = promptedUsername.trim();
+      safeSetLocalStorageValue(LOCAL_STORAGE_USERNAME_KEY, activeUsername);
+      alert('Username saved. Click Send again.');
+      return;
+    }
+
+    if (!senderContact) {
+      const promptedContact = window.prompt('Your contact');
+
+      if (!promptedContact?.trim()) {
+        return;
+      }
+
+      suggestionSenderContact = promptedContact.trim();
+      senderContact = suggestionSenderContact;
+      safeSetLocalStorageValue(LOCAL_STORAGE_CONTACT_KEY, suggestionSenderContact);
+      alert('Contact saved. Sending now...');
+    }
+
+    const suggestionLastSentKey = getSuggestionLastSentKey(activeUsername);
+    const lastSentRaw = safeGetLocalStorageValue(suggestionLastSentKey);
+    const lastSentAt = Number.parseInt(lastSentRaw || '', 10);
+
+    if (Number.isFinite(lastSentAt)) {
+      const msElapsed = Date.now() - lastSentAt;
+
+      if (msElapsed < SUGGESTION_COOLDOWN_MS) {
+        alert(getSuggestionCooldownMessage(SUGGESTION_COOLDOWN_MS - msElapsed));
+        return;
+      }
+    }
+
+    isSendingSuggestion = true;
+    alert('Sending Message');
+
+    try {
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_name: EMAILJS_TO_NAME,
+        from_name: activeUsername,
+        sender_contact: senderContact,
+        reply_to: EMAILJS_REPLY_TO,
+        guest_contact: 'none',
+        resort_id: activeUsername,
+        message: guestMessage
+      });
+
+      safeSetLocalStorageValue(suggestionLastSentKey, String(Date.now()));
+      suggestionMessage = '';
+      alert('Message Sent !');
+    } catch (error) {
+      console.error('Suggestion email failed:', error);
+      alert('Message Not Sent !');
+    } finally {
+      isSendingSuggestion = false;
+    }
+  }
+
   onMount(async () => {
+    const initializeEmailJs = () => {
+      if (window.emailjs) {
+        window.emailjs.init({
+          publicKey: EMAILJS_PUBLIC_KEY
+        });
+        isEmailJsReady = true;
+        return;
+      }
+
+      setTimeout(initializeEmailJs, 150);
+    };
+
+    initializeEmailJs();
+
     const savedTheme = safeGetLocalStorageValue(LOCAL_STORAGE_THEME_KEY);
     applyTheme(savedTheme === 'light' ? 'light' : 'dark', false);
 
@@ -798,6 +939,7 @@
 
     const savedUsername = safeGetLocalStorageValue(LOCAL_STORAGE_USERNAME_KEY)?.trim();
     const savedUserId = safeGetLocalStorageValue(LOCAL_STORAGE_USER_ID_KEY)?.trim();
+    suggestionSenderContact = safeGetLocalStorageValue(LOCAL_STORAGE_CONTACT_KEY)?.trim() || '';
 
     if (savedUsername && savedUserId) {
       activeUsername = savedUsername;
@@ -810,6 +952,10 @@
     showCredentialsForm = true;
   });
 </script>
+
+<svelte:head>
+  <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</svelte:head>
 
 <div class="page">
   <header class="topbar">
@@ -912,6 +1058,32 @@
             {#if isCollectorAccountMatch() && uploadStatus}
               <p class="upload-status">{uploadStatus}</p>
             {/if}
+            <div class="suggestion-actions">
+              <input
+                class="suggestion-input"
+                type="text"
+                bind:value={suggestionMessage}
+                placeholder={t('suggestionPlaceholder')}
+              />
+              <button
+                class="cta suggestion-send-btn"
+                type="button"
+                on:click={sendSuggestion}
+                disabled={isSendingSuggestion || !isEmailJsReady}
+                aria-label={isSendingSuggestion ? t('sendingSuggestion') : t('sendSuggestion')}
+                title={isSendingSuggestion ? t('sendingSuggestion') : t('sendSuggestion')}
+              >
+                {#if isSendingSuggestion}
+                  <svg class="suggestion-sending-icon" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M8 1.5a.75.75 0 0 1 .75.75v1.7a.75.75 0 0 1-1.5 0v-1.7A.75.75 0 0 1 8 1.5Zm0 10.35a.75.75 0 0 1 .75.75v1.65a.75.75 0 0 1-1.5 0V12.6a.75.75 0 0 1 .75-.75ZM2.25 7.25h1.7a.75.75 0 0 1 0 1.5h-1.7a.75.75 0 0 1 0-1.5Zm9.8 0h1.7a.75.75 0 0 1 0 1.5h-1.7a.75.75 0 0 1 0-1.5ZM3.75 3.75a.75.75 0 0 1 1.06 0l1.2 1.2a.75.75 0 1 1-1.06 1.06l-1.2-1.2a.75.75 0 0 1 0-1.06Zm6.24 6.24a.75.75 0 0 1 1.06 0l1.2 1.2a.75.75 0 1 1-1.06 1.06l-1.2-1.2a.75.75 0 0 1 0-1.06ZM3.75 12.25a.75.75 0 0 1 0-1.06l1.2-1.2a.75.75 0 1 1 1.06 1.06l-1.2 1.2a.75.75 0 0 1-1.06 0Zm6.24-6.24a.75.75 0 0 1 0-1.06l1.2-1.2a.75.75 0 1 1 1.06 1.06l-1.2 1.2a.75.75 0 0 1-1.06 0Z" />
+                  </svg>
+                {:else}
+                  <svg class="suggestion-send-icon" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                  </svg>
+                {/if}
+              </button>
+            </div>
           </div>
         {/if}
       </div>
@@ -1138,6 +1310,7 @@
   }
 
   :global(body[data-theme='light'] .image-field-input),
+  :global(body[data-theme='light'] .suggestion-input),
   :global(body[data-theme='light'] .credentials-form input) {
     color: #1f2937;
     background: #ffffff;
@@ -1145,6 +1318,19 @@
   }
 
   :global(body[data-theme='light'] .image-field-input) {
+    background-image:
+      linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(15, 23, 42, 0.05) 45%,
+        rgba(15, 23, 42, 0.14) 50%,
+        rgba(15, 23, 42, 0.05) 55%,
+        rgba(255, 255, 255, 0) 100%
+      ),
+      linear-gradient(#ffffff, #ffffff);
+  }
+
+  :global(body[data-theme='light'] .suggestion-input) {
     background-image:
       linear-gradient(
         110deg,
@@ -1207,6 +1393,64 @@
     flex-wrap: wrap;
   }
 
+  .suggestion-actions {
+    margin-top: 0.85rem;
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .suggestion-actions .cta {
+    flex: 0 0 auto;
+  }
+
+  .suggestion-send-btn {
+    width: 2.35rem;
+    min-height: 2.35rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .suggestion-send-icon,
+  .suggestion-sending-icon {
+    width: 1rem;
+    height: 1rem;
+    fill: #00121d;
+    display: block;
+  }
+
+  .suggestion-sending-icon {
+    animation: spin 0.9s linear infinite;
+  }
+
+  .suggestion-input {
+    font: inherit;
+    color: #f4f6fb;
+    background: #121825;
+    border: 1px solid #37445f;
+    border-radius: 999px;
+    padding: 0.55rem 0.8rem;
+    min-height: 2.35rem;
+    flex: 1 1 240px;
+    box-sizing: border-box;
+    background-image:
+      linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.07) 45%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.07) 55%,
+        rgba(255, 255, 255, 0) 100%
+      ),
+      linear-gradient(#121825, #121825);
+    background-repeat: no-repeat;
+    background-size: 220% 100%, 100% 100%;
+    background-position: 140% 0, 0 0;
+    animation: inputSweep 2.6s linear infinite;
+  }
+
   .upload-input {
     display: none;
   }
@@ -1245,6 +1489,12 @@
 
   .image-field-input:focus,
   .image-field-input:not(:placeholder-shown) {
+    animation: none;
+    background-position: 0 0, 0 0;
+  }
+
+  .suggestion-input:focus,
+  .suggestion-input:not(:placeholder-shown) {
     animation: none;
     background-position: 0 0, 0 0;
   }
@@ -1381,7 +1631,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .image-field-input {
+    .image-field-input,
+    .suggestion-input {
       animation: none;
       background-position: 0 0, 0 0;
     }
@@ -1577,9 +1828,17 @@
 
     .hero-actions .cta,
     .hero-actions .ghost,
+    .suggestion-actions .cta,
+    .suggestion-input,
     .image-field-input {
       width: 100%;
       min-height: 46px;
+    }
+
+    .suggestion-actions .suggestion-send-btn {
+      width: 46px;
+      min-height: 46px;
+      padding: 0;
     }
 
     .credentials-form input,
@@ -1594,6 +1853,7 @@
     }
 
     .credentials-form input,
+    .suggestion-input,
     .image-field-input {
       font-size: 16px;
       padding: 0.72rem 0.72rem;
