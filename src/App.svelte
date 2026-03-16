@@ -4,7 +4,7 @@
 
   function getMarkdownValue(key, fallbackValue) {
     const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const match = markdownConfig.match(new RegExp(`^${escapedKey}:\\s*(.+)$`, 'm'));
+    const match = markdownConfig.match(new RegExp(`^${escapedKey}:[ \\t]*(.*)$`, 'm'));
     return match?.[1]?.trim() || fallbackValue;
   }
 
@@ -63,6 +63,14 @@
   );
   const LOCAL_STORAGE_USER_ID_KEY = getMarkdownValue('LOCAL_STORAGE_USER_ID_KEY', 'postcard_user_id');
   const LOCAL_STORAGE_CONTACT_KEY = getMarkdownValue('LOCAL_STORAGE_CONTACT_KEY', 'postcard_contact');
+  const LOCAL_STORAGE_TOUR_NAME_KEY = getMarkdownValue(
+    'LOCAL_STORAGE_TOUR_NAME_KEY',
+    'postcard_tour_name'
+  );
+  const LOCAL_STORAGE_TOUR_DATE_KEY = getMarkdownValue(
+    'LOCAL_STORAGE_TOUR_DATE_KEY',
+    'postcard_tour_date'
+  );
   const LOCAL_STORAGE_THEME_KEY = getMarkdownValue('LOCAL_STORAGE_THEME_KEY', 'postcard_theme');
   const LOCAL_STORAGE_LANGUAGE_KEY = getMarkdownValue('LOCAL_STORAGE_LANGUAGE_KEY', 'postcard_language');
   const POSTCARD_DETAILS_API_BASE_URL = normalizeLookApiBaseUrl(API_BASE_URL);
@@ -97,6 +105,16 @@
       'Cet endroit comptait beaucoup pour moi parce que _____.',
       'Une chose que je n’oublierai jamais de cet endroit est _____.'
     ],
+    ru: [
+      'Воспоминание, которое я всегда сохраню отсюда, — _____.',
+      'Я никогда не забуду это место, потому что _____.',
+      'Это место всегда будет напоминать мне о _____.',
+      'Когда я думаю об этом месте, я вспоминаю _____.',
+      'Это место стало незабываемым из-за _____.',
+      'Момент, который остался со мной здесь, — _____.',
+      'Это место так много значило для меня, потому что _____.',
+      'Одна вещь, которую я никогда не забуду об этом месте, — _____.'
+    ],
     ko: [
       '이곳에서 가장 오래 기억에 남을 순간은 _____.',
       '이곳을 절대 잊지 못할 이유는 _____.',
@@ -128,7 +146,7 @@
       themeToDark: 'Switch to dark theme',
       eyebrow: 'MEMORIES, COLLECTED AND SHARED',
       subtext: 'Collect moments, travel with ease, and share memories.',
-      enterAccount: 'Enter your account',
+      enterAccount: 'Create your account',
       username: 'Username',
       userId: 'UserID',
       enterUsername: 'Enter username',
@@ -159,7 +177,21 @@
       sendingSuggestion: 'Sending...',
       suggestionNeedText: 'Please enter your suggestion.',
       suggestionSent: 'Thanks for suggestions',
-      suggestionFailed: 'Could not send suggestion right now.'
+      suggestionFailed: 'Could not send suggestion right now.',
+      bookIslandTour: 'Book island tour',
+      islandTourTitle: 'Book your island tour',
+      islandTourDescription: 'Leave your name and contact details and we will follow up with tour availability.',
+      nameLabel: 'Name',
+      contactLabel: 'Contact',
+      dateLabel: 'Tour date',
+      enterName: 'Enter your name',
+      enterContact: 'Enter your contact',
+      cancel: 'Cancel',
+      submitBooking: 'Submit booking',
+      bookingNeedName: 'Please enter your name.',
+      bookingNeedContact: 'Please enter your contact details.',
+      bookingNeedDate: 'Please choose a tour date.',
+      bookingSaved: 'Tour request saved. We will contact you soon.'
     },
     fr: {
       brandTitle: 'Carte Postale Garden Home',
@@ -201,6 +233,47 @@
       suggestionNeedText: 'Veuillez saisir votre suggestion.',
       suggestionSent: 'Merci pour vos suggestions',
       suggestionFailed: 'Impossible d’envoyer la suggestion pour le moment.'
+    },
+    ru: {
+      brandTitle: 'Открытка Garden Home',
+      welcome: 'Добро пожаловать, {name}',
+      guest: 'Гость',
+      themeToLight: 'Переключить на светлую тему',
+      themeToDark: 'Переключить на тёмную тему',
+      eyebrow: 'ВОСПОМИНАНИЯ, СОБРАННЫЕ И ПОДЕЛЁННЫЕ',
+      subtext: 'Собирайте моменты, путешествуйте с лёгкостью и делитесь воспоминаниями.',
+      enterAccount: 'Введите данные аккаунта',
+      username: 'Имя пользователя',
+      userId: 'ID пользователя',
+      enterUsername: 'Введите имя пользователя',
+      enterUserId: 'Введите ID пользователя',
+      saveAndContinue: 'Сохранить и продолжить',
+      loadingImage: 'Загрузка изображения...',
+      scannedPostcardAlt: 'Отсканированная открытка',
+      location: 'Место',
+      collected: 'Собрано',
+      collector: 'Коллекционер',
+      uploading: 'Загрузка...',
+      uploadPicture: 'Загрузить изображение',
+      collectionMemory: 'Воспоминания открытки',
+      noCollectionMemory: 'Пока нет воспоминаний в коллекции.',
+      gridTitle: 'Когда-то здесь, теперь воспоминание.',
+      noPostcardData: 'Для этого аккаунта не найдены данные открытки.',
+      fetchError: 'Не удалось получить данные. Проверьте имя пользователя и ID пользователя.',
+      memoryPromptFallback: 'Какое у вас воспоминание об этом месте?',
+      uploadNeedCredentials: 'Перед загрузкой укажите имя пользователя и ID пользователя.',
+      uploadFailed: 'Загрузка не удалась.',
+      uploadResponseMissing: 'В ответе загрузки отсутствует список сохранённых файлов.',
+      uploadingFiles: ({ count }) => `Загрузка ${count} файл${count > 1 ? 'ов' : 'а'}...`,
+      uploadedFiles: ({ count }) => `Успешно загружено ${count} файл${count > 1 ? 'ов' : ''}.`,
+      enterBothCredentials: 'Введите имя пользователя и ID пользователя.',
+      imagePreview: 'Предпросмотр изображения',
+      suggestionPlaceholder: 'Расскажите нам или оставьте предложение',
+      sendSuggestion: 'Отправить предложение',
+      sendingSuggestion: 'Отправка...',
+      suggestionNeedText: 'Пожалуйста, введите ваше предложение.',
+      suggestionSent: 'Спасибо за предложение',
+      suggestionFailed: 'Сейчас не удалось отправить предложение.'
     },
     ko: {
       brandTitle: '가든 홈 엽서',
@@ -289,6 +362,7 @@
   const SUPPORTED_LANGUAGES = [
     { value: 'en', label: 'EN' },
     { value: 'fr', label: 'Français' },
+    { value: 'ru', label: 'Русский' },
     { value: 'ko', label: '한국어' },
     { value: 'zh', label: '中文' }
   ];
@@ -307,6 +381,13 @@
   let suggestionMessage = '';
   let isSendingSuggestion = false;
   let isEmailJsReady = false;
+  let showTourBookingModal = false;
+  let tourBookingName = '';
+  let tourBookingContact = '';
+  let tourBookingDate = '';
+  let isSendingTourBooking = false;
+  let tourBookingError = '';
+  let tourBookingStatus = '';
   let imageFieldPlaceholder = MEMORY_PROMPTS_BY_LANGUAGE.en[0];
   let inputUsername = '';
   let inputUserId = '';
@@ -331,6 +412,7 @@
     if (currentLanguage === 'ko') return 'ko-KR';
     if (currentLanguage === 'zh') return 'zh-CN';
     if (currentLanguage === 'fr') return 'fr-FR';
+    if (currentLanguage === 'ru') return 'ru-RU';
     return 'en-US';
   }
 
@@ -831,6 +913,9 @@
       const saved = await uploadImages(files);
       appendUploadedItemsToCollectionMemory(saved, files);
       uploadStatus = t('uploadedFiles', { count: saved.length });
+      uploadImageField = '';
+      showUploadPictureButton = false;
+      imageFieldPlaceholder = getRotatingMemoryPrompt();
     } catch (error) {
       console.error('Upload failed:', error);
       uploadStatus = error?.message || t('uploadFailed');
@@ -838,6 +923,94 @@
 
     isUploadingImages = false;
     event.currentTarget.value = '';
+  }
+
+  function openTourBookingModal() {
+    tourBookingError = '';
+    tourBookingName =
+      safeGetLocalStorageValue(LOCAL_STORAGE_TOUR_NAME_KEY)?.trim() || activeUsername || tourBookingName;
+    tourBookingContact =
+      safeGetLocalStorageValue(LOCAL_STORAGE_CONTACT_KEY)?.trim() ||
+      suggestionSenderContact ||
+      tourBookingContact;
+    tourBookingDate = safeGetLocalStorageValue(LOCAL_STORAGE_TOUR_DATE_KEY)?.trim() || tourBookingDate;
+    showTourBookingModal = true;
+  }
+
+  function closeTourBookingModal() {
+    showTourBookingModal = false;
+    tourBookingError = '';
+  }
+
+  async function submitTourBooking() {
+    const normalizedName = tourBookingName.trim();
+    const normalizedContact = tourBookingContact.trim();
+    const normalizedDate = tourBookingDate.trim();
+
+    if (!normalizedName) {
+      tourBookingError = t('bookingNeedName');
+      return;
+    }
+
+    if (!normalizedContact) {
+      tourBookingError = t('bookingNeedContact');
+      return;
+    }
+
+    if (!normalizedDate) {
+      tourBookingError = t('bookingNeedDate');
+      return;
+    }
+
+    if (!window.emailjs || !isEmailJsReady) {
+      tourBookingError = t('suggestionFailed');
+      return;
+    }
+
+    tourBookingName = normalizedName;
+    tourBookingContact = normalizedContact;
+    tourBookingDate = normalizedDate;
+    suggestionSenderContact = normalizedContact;
+    safeSetLocalStorageValue(LOCAL_STORAGE_TOUR_NAME_KEY, normalizedName);
+    safeSetLocalStorageValue(LOCAL_STORAGE_CONTACT_KEY, normalizedContact);
+    safeSetLocalStorageValue(LOCAL_STORAGE_TOUR_DATE_KEY, normalizedDate);
+
+    const bookingMessage = [
+      'Island tour booking',
+      `name: ${normalizedName}`,
+      `contact: ${normalizedContact}`,
+      `date: ${normalizedDate}`,
+      `place: ${scannedPostcardDetails.title}`
+    ].join(' | ');
+
+    isSendingTourBooking = true;
+    tourBookingError = '';
+
+    try {
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_name: EMAILJS_TO_NAME,
+        from_name: normalizedName,
+        sender_contact: normalizedContact,
+        reply_to: EMAILJS_REPLY_TO,
+        guest_contact: 'none',
+        resort_id: activeUsername || normalizedName,
+        message: bookingMessage
+      });
+
+      tourBookingStatus = t('bookingSaved');
+      closeTourBookingModal();
+    } catch (error) {
+      console.error('Tour booking email failed:', error);
+      tourBookingError = t('suggestionFailed');
+    } finally {
+      isSendingTourBooking = false;
+    }
+  }
+
+  function handleWindowKeydown(event) {
+    if (event.key === 'Escape' && showTourBookingModal) {
+      closeTourBookingModal();
+    }
   }
 
   async function submitCredentials() {
@@ -993,6 +1166,9 @@
     const savedUsername = safeGetLocalStorageValue(LOCAL_STORAGE_USERNAME_KEY)?.trim();
     const savedUserId = safeGetLocalStorageValue(LOCAL_STORAGE_USER_ID_KEY)?.trim();
     suggestionSenderContact = safeGetLocalStorageValue(LOCAL_STORAGE_CONTACT_KEY)?.trim() || '';
+    tourBookingName = safeGetLocalStorageValue(LOCAL_STORAGE_TOUR_NAME_KEY)?.trim() || savedUsername || '';
+    tourBookingContact = suggestionSenderContact;
+    tourBookingDate = safeGetLocalStorageValue(LOCAL_STORAGE_TOUR_DATE_KEY)?.trim() || '';
 
     if (savedUsername && savedUserId) {
       activeUsername = savedUsername;
@@ -1009,6 +1185,8 @@
 <svelte:head>
   <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </svelte:head>
+
+<svelte:window on:keydown={handleWindowKeydown} />
 
 <div class="page">
   <header class="topbar">
@@ -1080,6 +1258,14 @@
               <p><span>{t('collected')}</span>{formatCollectedDate(scannedPostcardDetails.collected)}</p>
               <p><span>{t('collector')}</span>{scannedPostcardDetails.collector}</p>
             </div>
+            <div class="booking-actions">
+              <button class="cta tour-booking-btn" type="button" on:click={openTourBookingModal}>
+                {t('bookIslandTour')}
+              </button>
+              {#if tourBookingStatus}
+                <p class="tour-booking-status">{tourBookingStatus}</p>
+              {/if}
+            </div>
             {#if isCollectorAccountMatch()}
               <div class="hero-actions">
                 {#if showUploadPictureButton}
@@ -1100,6 +1286,7 @@
                 />
                 <input
                   id="modalImageField"
+                  bind:value={uploadImageField}
                   class="image-field-input"
                   type="text"
                   name="imageField"
@@ -1185,6 +1372,44 @@
     {/each}
   </section>
 
+  {#if showTourBookingModal}
+    <div class="modal-backdrop" role="presentation">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tour-booking-title"
+        tabindex="-1"
+      >
+        <h3 id="tour-booking-title">{t('islandTourTitle')}</h3>
+        <p class="modal-copy">{t('islandTourDescription')}</p>
+        <form class="tour-booking-form" on:submit|preventDefault={submitTourBooking}>
+          <label>
+            {t('nameLabel')}
+            <input bind:value={tourBookingName} type="text" placeholder={t('enterName')} />
+          </label>
+          <label>
+            {t('dateLabel')}
+            <input bind:value={tourBookingDate} type="date" />
+          </label>
+          <label>
+            {t('contactLabel')}
+            <input bind:value={tourBookingContact} type="text" placeholder={t('enterContact')} />
+          </label>
+          {#if tourBookingError}
+            <p class="credentials-error">{tourBookingError}</p>
+          {/if}
+          <div class="tour-booking-actions">
+            <button class="ghost" type="button" on:click={closeTourBookingModal}>{t('cancel')}</button>
+            <button class="cta" type="submit" disabled={isSendingTourBooking}>
+              {isSendingTourBooking ? t('sendingSuggestion') : t('submitBooking')}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {/if}
+
   {#if lightboxImageSrc}
     <button class="image-lightbox" type="button" on:click={closeImagePreview}>
       <img class="lightbox-image" src={lightboxImageSrc} alt={lightboxImageAlt} />
@@ -1219,6 +1444,13 @@
     font-size: 1.5rem;
     color: #00a8ff;
     letter-spacing: -0.02em;
+    display: inline-block;
+    transform-origin: left top;
+    transform: perspective(700px) rotateX(8deg);
+    text-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.28),
+      0 2px 0 rgba(0, 0, 0, 0.2),
+      0 10px 20px rgba(0, 0, 0, 0.38);
   }
 
   .account-chip {
@@ -1353,7 +1585,9 @@
   :global(body[data-theme='light'] .memory-card p),
   :global(body[data-theme='light'] .memory-empty),
   :global(body[data-theme='light'] .upload-status),
-  :global(body[data-theme='light'] .credentials-form label) {
+  :global(body[data-theme='light'] .credentials-form label),
+  :global(body[data-theme='light'] .tour-booking-form label),
+  :global(body[data-theme='light'] .modal-copy) {
     color: #5b6b88;
   }
 
@@ -1364,10 +1598,24 @@
 
   :global(body[data-theme='light'] .image-field-input),
   :global(body[data-theme='light'] .suggestion-input),
-  :global(body[data-theme='light'] .credentials-form input) {
+  :global(body[data-theme='light'] .credentials-form input),
+  :global(body[data-theme='light'] .tour-booking-form input) {
     color: #1f2937;
     background: #ffffff;
     border-color: #bfd0e8;
+  }
+
+  :global(body[data-theme='light'] .tour-booking-status) {
+    color: #0f6fb5;
+  }
+
+  :global(body[data-theme='light'] .modal-card) {
+    background: #ffffff;
+    border-color: #d3deef;
+  }
+
+  :global(body[data-theme='light'] .modal-card h3) {
+    color: #1f2937;
   }
 
   :global(body[data-theme='light'] .image-field-input) {
@@ -1444,6 +1692,25 @@
     display: flex;
     gap: 0.65rem;
     flex-wrap: wrap;
+  }
+
+  .booking-actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .tour-booking-btn {
+    min-height: 2.5rem;
+  }
+
+  .tour-booking-status {
+    margin: 0;
+    color: #8ed0ff;
+    font-size: 0.9rem;
+    line-height: 1.45;
   }
 
   .suggestion-actions {
@@ -1591,6 +1858,72 @@
   .credentials-error {
     margin: 0;
     color: #ff9f9f;
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(6, 10, 18, 0.72);
+    backdrop-filter: blur(10px);
+  }
+
+  .modal-card {
+    width: min(100%, 420px);
+    box-sizing: border-box;
+    border-radius: 1rem;
+    border: 1px solid #252f44;
+    background: #121825;
+    padding: 1rem;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+  }
+
+  .modal-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #f4f6fb;
+  }
+
+  .modal-copy {
+    margin: 0.55rem 0 0;
+    color: #b3c1d8;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .tour-booking-form {
+    margin-top: 0.95rem;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .tour-booking-form label {
+    display: grid;
+    gap: 0.45rem;
+    color: #b3c1d8;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .tour-booking-form input {
+    font: inherit;
+    color: #f4f6fb;
+    background: #0b1222;
+    border: 1px solid #37445f;
+    border-radius: 0.85rem;
+    padding: 0.75rem 0.8rem;
+    box-sizing: border-box;
+  }
+
+  .tour-booking-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    flex-wrap: wrap;
   }
 
   .postcard-frame {
@@ -1882,10 +2215,23 @@
     .hero-actions .cta,
     .hero-actions .ghost,
     .suggestion-actions .cta,
+    .tour-booking-btn,
     .suggestion-input,
-    .image-field-input {
+    .image-field-input,
+    .tour-booking-form input,
+    .tour-booking-actions .cta,
+    .tour-booking-actions .ghost {
       width: 100%;
       min-height: 46px;
+    }
+
+    .tour-booking-actions {
+      width: 100%;
+    }
+
+    .modal-card {
+      padding: 0.9rem;
+      border-radius: 0.85rem;
     }
 
     .suggestion-actions .suggestion-send-btn {
