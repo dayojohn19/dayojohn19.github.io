@@ -2,12 +2,14 @@
 
 Update values below to change app behavior.
 
-API_BASE_URL: https://www.ourblueearth.online/garden/look/
-UPLOAD_API_URL: https://www.ourblueearth.online/garden/upload_images/
+API_BASE_URL: https://ourblueearth.online/garden/look/
+UPLOAD_API_URL: https://ourblueearth.online/garden/upload_images/
 
-<!-- 
-API_BASE_URL: http://127.0.0.1/garden/look/
-UPLOAD_API_URL: http://127.0.0.1/garden/upload_images/ -->
+
+<!-- API_BASE_URL: http://127.0.0.1:8000/garden/look/
+UPLOAD_API_URL: http://127.0.0.1:8000/garden/upload_images/ -->
+
+
 UPLOAD_IMAGE_FIELD:
 API_USERNAME:
 API_USER_ID:
